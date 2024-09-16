@@ -26,7 +26,8 @@ export const globalStyles = StyleSheet.create({
     color: "#fff",
   },
   title: {
-    fontSize: 16,
+    fontSize: 20,
     marginVertical: 10,
+    fontFamily: "Oswald-Regular",
   },
 });
