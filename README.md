@@ -1,1 +1,6 @@
-# Module-14-D-veloppement-Mobile-2
+# Module-13-Developpement-Mobile-1
+La différence entre une application mobile native et une application mobile multiplateforme :
+Une application mobile native est développée spécifiquement pour un système d'exploitation, comme iOS ou Android, avec des langages comme Swift, Objective-C, Java ou Kotlin, offrant des performances optimales et un accès complet aux fonctionnalités matérielles de l'appareil. Tandis qu'une application mobile multiplateforme est construite avec un seul code base qui fonctionne sur plusieurs systèmes d'exploitation grâce à des frameworks comme React Native. Elle est plus rapide à développer, mais peut être moins performante que les applications natives pour certaines fonctionnalités.
+
+La différence entre React Native et React :
+React est une bibliothèque JavaScript utilisée pour créer des interfaces utilisateur sur le web, où il manipule le DOM dans les navigateurs. En revanche, React Native est un framework basé sur React, conçu pour développer des applications mobiles. Il traduit les composants React en éléments natifs pour iOS et Android, permettant de créer des applications mobiles avec une base de code partagée tout en offrant une interface et des performances proches du natif.
