@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from "react
 import { Picker } from "@react-native-picker/picker";
 import { globalStyles } from "../styles/globalStyles";
 import { useNavigation } from "@react-navigation/native";
+import { getPriceSymbol, getRatingSymbol } from "../utils/restaurantUtils";
 
 const EXPO_PUBLIC_NGROK_URL = process.env.EXPO_PUBLIC_NGROK_URL;
 
@@ -58,41 +59,8 @@ const NearbyRestaurants = () => {
   const renderRestaurant = ({ item }) => {
     const randomImage = images[Math.floor(Math.random() * images.length)];
 
-    let priceSymbol = "";
-    switch (item.price_range) {
-      case 1:
-        priceSymbol = "($)";
-        break;
-      case 2:
-        priceSymbol = "($$)";
-        break;
-      case 3:
-        priceSymbol = "($$$)";
-        break;
-      default:
-        priceSymbol = "($)";
-    }
-
-    let ratingSymbol = "";
-    switch (item.rating) {
-      case 1:
-        ratingSymbol = "★";
-        break;
-      case 2:
-        ratingSymbol = "★★";
-        break;
-      case 3:
-        ratingSymbol = "★★★";
-        break;
-      case 4:
-        ratingSymbol = "★★★★";
-        break;
-      case 5:
-        ratingSymbol = "★★★★★";
-        break;
-      default:
-        priceSymbol = "★";
-    }
+    const priceSymbol = getPriceSymbol(item.price_range);
+    const ratingSymbol = getRatingSymbol(item.rating);
 
     return (
       <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("RestaurantsMenu", { restaurant: item })}>
@@ -110,17 +78,17 @@ const NearbyRestaurants = () => {
     <View style={styles.container}>
       <Text style={globalStyles.title}>NEARBY RESTAURANTS</Text>
 
-      <View style={styles.row}>
-        <View style={styles.column}>
+      <View style={globalStyles.row}>
+        <View style={globalStyles.column}>
           <Text style={globalStyles.title}>Rating</Text>
         </View>
-        <View style={styles.column}>
+        <View style={globalStyles.column}>
           <Text style={globalStyles.title}>Price</Text>
         </View>
       </View>
 
-      <View style={styles.row}>
-        <View style={styles.column}>
+      <View style={globalStyles.row}>
+        <View style={globalStyles.column}>
           <Picker selectedValue={selectedRating} style={[styles.picker, globalStyles.listItemText]} onValueChange={(itemValue) => setSelectedRating(itemValue)}>
             <Picker.Item label="-Select-" value="0" />
             <Picker.Item label="★" value="1" />
@@ -130,7 +98,7 @@ const NearbyRestaurants = () => {
             <Picker.Item label="★★★★★" value="5" />
           </Picker>
         </View>
-        <View style={styles.column}>
+        <View style={globalStyles.column}>
           <Picker selectedValue={selectedPrice} style={[styles.picker, globalStyles.listItemText]} onValueChange={(itemValue) => setSelectedPrice(itemValue)}>
             <Picker.Item label="-Select-" value="0" />
             <Picker.Item label="$" value="1" />
@@ -162,14 +130,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     margin: 20,
-  },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-  },
-  column: {
-    flex: 1,
   },
   picker: {
     height: 50,

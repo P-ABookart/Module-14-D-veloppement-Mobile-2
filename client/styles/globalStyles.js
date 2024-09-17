@@ -30,4 +30,12 @@ export const globalStyles = StyleSheet.create({
     marginVertical: 10,
     fontFamily: "Oswald-Regular",
   },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+  },
+  column: {
+    flex: 1,
+  },
 });
