@@ -38,4 +38,38 @@ export const globalStyles = StyleSheet.create({
   column: {
     flex: 1,
   },
+  top: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "104%",
+    paddingHorizontal: 14,
+    paddingVertical: 18,
+    backgroundColor: "#222126",
+    borderRadius: 8,
+    marginBottom: 30,
+  },
+  orderItem: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    paddingVertical: 5,
+  },
+  itemText: {
+    fontSize: 16,
+    color: "#3b3b3b",
+  },
+  productName: {
+    width: "50%",
+    textAlign: "left",
+  },
+  productQuantity: {
+    width: "15%",
+    textAlign: "right",
+  },
+  productPrice: {
+    width: "35%",
+    textAlign: "right",
+  },
 });

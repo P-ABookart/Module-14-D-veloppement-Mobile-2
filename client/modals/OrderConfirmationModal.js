@@ -45,26 +45,27 @@ const OrderConfirmationModal = ({ visible, onClose, orderItems, restaurantId, cu
       setOrderStatus("error");
     }
   };
+
   return (
     <Modal transparent={true} visible={visible} onRequestClose={onClose}>
       <View style={styles.modalBackground}>
         <View style={styles.modalContainer}>
-          <View style={styles.top}>
+          <View style={globalStyles.top}>
             <Text style={styles.title}>Order Confirmation</Text>
             <TouchableOpacity style={styles.closeButton} onPress={onClose}>
               <Text style={styles.closeButtonText}>X</Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.orderItem}>
-            <Text style={[styles.subhead, styles.productName]}>Order Summary</Text>
+          <View style={globalStyles.orderItem}>
+            <Text style={[styles.subhead, globalStyles.productName]}>Order Summary</Text>
           </View>
 
           {/* Show products */}
           {orderItems.map((item) => (
-            <View style={styles.orderItem} key={item.id}>
-              <Text style={[styles.itemText, styles.productName]}>{item.name}</Text>
-              <Text style={[styles.itemText, styles.productQuantity]}>x {item.quantity}</Text>
-              <Text style={[styles.itemText, styles.productPrice]}>$ {item.cost.toFixed(2)}</Text>
+            <View style={globalStyles.orderItem} key={item.id}>
+              <Text style={[globalStyles.itemText, globalStyles.productName]}>{item.name}</Text>
+              <Text style={[globalStyles.itemText, globalStyles.productQuantity]}>x {item.quantity}</Text>
+              <Text style={[globalStyles.itemText, globalStyles.productPrice]}>$ {item.cost.toFixed(2)}</Text>
             </View>
           ))}
 
@@ -137,17 +138,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 15,
   },
-  top: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: width * 0.9,
-    paddingHorizontal: 14,
-    paddingVertical: 18,
-    backgroundColor: "#222126",
-    borderRadius: 8,
-    marginBottom: 30,
-  },
   title: {
     fontSize: 20,
     fontFamily: "Oswald-Regular",
@@ -171,29 +161,6 @@ const styles = StyleSheet.create({
   confirmOrder: {
     width: "100%",
     marginBottom: 15,
-  },
-  orderItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: "100%",
-    paddingVertical: 5,
-  },
-  itemText: {
-    fontSize: 16,
-    color: "#3b3b3b",
-  },
-  productName: {
-    width: "50%",
-    textAlign: "left",
-  },
-  productQuantity: {
-    width: "15%",
-    textAlign: "right",
-  },
-  productPrice: {
-    width: "35%",
-    textAlign: "right",
   },
   separator: {
     borderBottomColor: "black",
