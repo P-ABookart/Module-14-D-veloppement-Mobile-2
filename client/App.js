@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Text, View, Image, Dimensions, TouchableOpacity, StyleSheet } from "react-native";
+import { AuthProvider } from "./context/AuthContext";
 import * as Font from "expo-font";
 
 // Screens
@@ -135,18 +136,10 @@ export default function App() {
     loadFonts();
   }, []);
 
-  if (!fontLoaded) {
-    return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
-    );
-  }
-
   return (
-    <NavigationContainer>
-      <AppStack />
-    </NavigationContainer>
+    <AuthProvider>
+      <NavigationContainer>{fontLoaded ? <AppStack /> : null}</NavigationContainer>
+    </AuthProvider>
   );
 }
 

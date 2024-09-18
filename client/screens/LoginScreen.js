@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView, Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { globalStyles } from "../styles/globalStyles";
+import { AuthContext } from "../context/AuthContext.js";
 
 const EXPO_PUBLIC_NGROK_URL = process.env.EXPO_PUBLIC_NGROK_URL;
 
@@ -12,17 +13,24 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigation = useNavigation();
+  const { login } = useContext(AuthContext);
 
   const handleLogin = async (email, password) => {
     try {
-      const response = await fetch(`${EXPO_PUBLIC_NGROK_URL}/api/auth`, {
+      if (!EXPO_PUBLIC_NGROK_URL) {
+        console.error("Ngrok url is not defined");
+        return;
+      }
+
+      const url = `${EXPO_PUBLIC_NGROK_URL}/api/auth`;
+
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
       });
-      console.log(response);
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -31,7 +39,8 @@ const LoginScreen = () => {
       }
 
       const data = await response.json();
-      console.log("Login successful:", data);
+
+      login(data);
 
       navigation.navigate("Main");
       navigation.reset({

@@ -3,14 +3,19 @@ import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from "react
 import { useRoute } from "@react-navigation/native";
 import { globalStyles } from "../styles/globalStyles";
 import { getPriceSymbol, getRatingSymbol } from "../utils/restaurantUtils";
+import OrderConfirmationModal from "../modals/OrderConfirmationModal";
 
 const EXPO_PUBLIC_NGROK_URL = process.env.EXPO_PUBLIC_NGROK_URL;
 
 const RestaurantMenuScreen = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isModalVisible, setModalVisible] = useState(false);
 
   const [quantities, setQuantities] = useState({});
+
+  const openModal = () => setModalVisible(true);
+  const closeModal = () => setModalVisible(false);
 
   const route = useRoute();
   const { restaurant } = route.params;
@@ -84,14 +89,14 @@ const RestaurantMenuScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={globalStyles.title}>RESTAURANT MENU</Text>
-      <View style={[globalStyles.row]}>
+      <View style={globalStyles.row}>
         <View style={globalStyles.column}>
           <Text style={styles.restaurantName}>{restaurant.name}</Text>
           <Text style={styles.restaurantInfo}>Price: {priceSymbol}</Text>
           <Text style={styles.restaurantInfo}>Rating: {ratingSymbol}</Text>
         </View>
         <View style={globalStyles.column}>
-          <TouchableOpacity style={[globalStyles.button, styles.createOrder]} /*onPress={}*/>
+          <TouchableOpacity style={[globalStyles.button, styles.createOrder]} onPress={openModal}>
             <Text style={globalStyles.buttonText}>Create Order</Text>
           </TouchableOpacity>
         </View>
@@ -109,6 +114,18 @@ const RestaurantMenuScreen = () => {
           columnWrapperStyle={styles.columnWrapper}
         />
       )}
+
+      <OrderConfirmationModal
+        visible={isModalVisible}
+        onClose={closeModal}
+        orderItems={Object.entries(quantities)
+          .filter(([id, qty]) => qty > 0)
+          .map(([id, qty]) => {
+            const product = products.find((product) => product.id === parseInt(id));
+            return { ...product, quantity: qty };
+          })}
+        restaurantId={restaurant.id}
+      />
     </View>
   );
 };
