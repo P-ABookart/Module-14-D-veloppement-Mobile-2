@@ -44,7 +44,7 @@ export const globalStyles = StyleSheet.create({
     alignItems: "center",
     width: "104%",
     paddingHorizontal: 14,
-    paddingVertical: 18,
+    paddingVertical: 16,
     backgroundColor: "#222126",
     borderRadius: 8,
     marginBottom: 30,
@@ -71,5 +71,48 @@ export const globalStyles = StyleSheet.create({
   productPrice: {
     width: "35%",
     textAlign: "right",
+  },
+  modalBackground: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0,0.5)",
+  },
+  modalContainer: {
+    width: "96%",
+    padding: 20,
+    backgroundColor: "white",
+    borderRadius: 10,
+    alignItems: "center",
+    borderRadius: 8,
+  },
+  totalContainer: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    width: "100%",
+    paddingTop: 5,
+    paddingBottom: 35,
+  },
+  subhead: {
+    fontWeight: "bold",
+    fontSize: 16,
+    marginRight: 5,
+    lineHeight: 20,
+  },
+  total: {
+    fontSize: 16,
+    fontFamily: "Oswald-Regular",
+    lineHeight: 20,
+  },
+  separator: {
+    borderBottomColor: "black",
+    borderBottomWidth: 1,
+    width: "100%",
+    marginVertical: 10,
+  },
+  closeButtonText: {
+    color: "gray",
+    fontSize: 30,
   },
 });

@@ -1,17 +1,45 @@
-import React from 'react';
-import { View, Text, Button, Modal, StyleSheet } from 'react-native';
+import React from "react";
+import { View, Text, TouchableOpacity, Modal, StyleSheet } from "react-native";
+import { globalStyles } from "../styles/globalStyles";
 
-const MyModal = ({ visible, onClose }) => {
+const MyModal = ({ visible, order, onClose }) => {
+  if (!order) return null;
+
   return (
-    <Modal
-      transparent={true}
-      visible={visible}
-      onRequestClose={onClose}
-    >
-      <View style={styles.modalBackground}>
-        <View style={styles.modalContainer}>
-          <Text style={styles.modalText}>This is a modal!</Text>
-          <Button title="Close" onPress={onClose} />
+    <Modal animationType="fade" transparent={true} visible={visible} onRequestClose={onClose}>
+      <View style={globalStyles.modalBackground}>
+        <View style={globalStyles.modalContainer}>
+          <View style={globalStyles.top}>
+            <View style={globalStyles.column}>
+              <Text style={styles.title}>{order.restaurant_name}</Text>
+              <Text style={styles.orderInfo}>Order Date: {order.timestamp.substring(0, 10)}</Text>
+              <Text style={styles.orderInfo}>Status: {order.status.toUpperCase()}</Text>
+              <Text style={styles.orderInfo}>Courrier: {order.courrier_name}</Text>
+            </View>
+            <View style={styles.closeButtonContainer}>
+              <TouchableOpacity onPress={onClose}>
+                <Text style={globalStyles.closeButtonText}>✖</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {/* Show products */}
+          {order.products.map((item) => (
+            <View style={globalStyles.orderItem} key={item.id}>
+              <Text style={[globalStyles.itemText, globalStyles.productName]}>{item.product_name}</Text>
+              <Text style={[globalStyles.itemText, globalStyles.productQuantity]}>x {item.quantity}</Text>
+              <Text style={[globalStyles.itemText, globalStyles.productPrice]}>$ {item.unit_cost.toFixed(2)}</Text>
+            </View>
+          ))}
+
+          {/* Dividing line */}
+          <View style={globalStyles.separator} />
+
+          {/* Total */}
+          <View style={globalStyles.totalContainer}>
+            <Text style={globalStyles.subhead}>TOTAL:</Text>
+            <Text style={globalStyles.total}>$ {order.total_cost.toFixed(2)}</Text>
+          </View>
         </View>
       </View>
     </Modal>
@@ -19,22 +47,22 @@ const MyModal = ({ visible, onClose }) => {
 };
 
 const styles = StyleSheet.create({
-  modalBackground: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  title: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#DA583B",
+    paddingBottom: 8,
+    paddingLeft: 10,
   },
-  modalContainer: {
-    width: 300,
-    padding: 20,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    alignItems: 'center',
+  orderInfo: {
+    fontsize: 10,
+    color: "#FFFFFF",
+    paddingLeft: 10,
   },
-  modalText: {
-    fontSize: 18,
-    marginBottom: 15,
+  closeButtonContainer: {
+    alignItems: "flex-end",
+    justifyContent: "center",
+    marginLeft: 10,
   },
 });
 

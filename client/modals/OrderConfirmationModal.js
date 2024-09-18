@@ -47,17 +47,17 @@ const OrderConfirmationModal = ({ visible, onClose, orderItems, restaurantId, cu
   };
 
   return (
-    <Modal transparent={true} visible={visible} onRequestClose={onClose}>
-      <View style={styles.modalBackground}>
-        <View style={styles.modalContainer}>
+    <Modal animationType="fade" transparent={true} visible={visible} onRequestClose={onClose}>
+      <View style={globalStyles.modalBackground}>
+        <View style={globalStyles.modalContainer}>
           <View style={globalStyles.top}>
             <Text style={styles.title}>Order Confirmation</Text>
-            <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-              <Text style={styles.closeButtonText}>X</Text>
+            <TouchableOpacity onPress={onClose}>
+              <Text style={globalStyles.closeButtonText}>✖</Text>
             </TouchableOpacity>
           </View>
           <View style={globalStyles.orderItem}>
-            <Text style={[styles.subhead, globalStyles.productName]}>Order Summary</Text>
+            <Text style={[globalStyles.subhead, globalStyles.productName]}>Order Summary</Text>
           </View>
 
           {/* Show products */}
@@ -70,12 +70,12 @@ const OrderConfirmationModal = ({ visible, onClose, orderItems, restaurantId, cu
           ))}
 
           {/* Dividing line */}
-          <View style={styles.separator} />
+          <View style={globalStyles.separator} />
 
           {/* Total */}
-          <View style={styles.totalContainer}>
-            <Text style={styles.subhead}>TOTAL:</Text>
-            <Text style={styles.total}>$ {total}</Text>
+          <View style={globalStyles.totalContainer}>
+            <Text style={globalStyles.subhead}>TOTAL:</Text>
+            <Text style={globalStyles.total}>$ {total}</Text>
           </View>
 
           {orderStatus === "processing" && (
@@ -120,20 +120,6 @@ const OrderConfirmationModal = ({ visible, onClose, orderItems, restaurantId, cu
 };
 
 const styles = StyleSheet.create({
-  modalBackground: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0,0.5)",
-  },
-  modalContainer: {
-    width: width * 0.95,
-    padding: 20,
-    backgroundColor: "white",
-    borderRadius: 10,
-    alignItems: "center",
-    borderRadius: 8,
-  },
   modalText: {
     fontSize: 18,
     marginBottom: 15,
@@ -143,38 +129,9 @@ const styles = StyleSheet.create({
     fontFamily: "Oswald-Regular",
     color: "#FFFFFF",
   },
-  closeButtonText: {
-    color: "gray",
-    fontSize: 25,
-  },
-  subhead: {
-    fontWeight: "bold",
-    fontSize: 16,
-    marginRight: 5,
-    lineHeight: 20,
-  },
-  total: {
-    fontSize: 16,
-    fontFamily: "Oswald-Regular",
-    lineHeight: 20,
-  },
   confirmOrder: {
     width: "100%",
     marginBottom: 15,
-  },
-  separator: {
-    borderBottomColor: "black",
-    borderBottomWidth: 1,
-    width: "100%",
-    marginVertical: 10,
-  },
-  totalContainer: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    width: "100%",
-    paddingTop: 5,
-    paddingBottom: 35,
   },
   center: {
     alignItems: "center",
