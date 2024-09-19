@@ -42,13 +42,19 @@ const LoginScreen = () => {
 
       login(data);
 
-      navigation.navigate("Main");
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "Main" }],
-      });
+      if (data.customer_id != 0 && data.courier_id != 0) {
+        navigation.navigate("SelectAccount");
+      } else if (data.customer_id != 0) {
+        navigation.navigate("CustomerMain");
+      } else if (data.courier_id != 0) {
+        navigation.navigate("CourierMain");
+      } else {
+        setErrorMessage("No valid role found for the user. Please contact support.");
+        return;
+      }
     } catch (error) {
       console.error("Error during login:", error);
+      setErrorMessage("An error occurred. Please try again later.");
     }
   };
 
