@@ -62,7 +62,7 @@ const OrderHistoryScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={globalStyles.title}>MY ORDERS</Text>
-      <View style={[globalStyles.row, styles.topMyOrders]}>
+      <View style={[globalStyles.row, globalStyles.topMyOrders]}>
         <Text style={styles.topOrder}>ORDER</Text>
         <Text style={styles.topStatus}>STATUS</Text>
         <Text style={styles.topView}>VIEW</Text>
@@ -77,7 +77,7 @@ const OrderHistoryScreen = () => {
           style={styles.ordersList}
           numColumns={1}
           columnWrapperStyle={styles.columnWrapper}
-          initialNumToRender
+          initialNumToRender={5}
         />
       )}
 
@@ -109,12 +109,6 @@ const styles = StyleSheet.create({
     width: "25%",
     alignItems: "center",
     paddingVertical: 8,
-  },
-  topMyOrders: {
-    backgroundColor: "#222126",
-    paddingHorizontal: 10,
-    paddingVertical: 15,
-    marginLeft: 0,
   },
   topOrder: {
     color: "#FFFFFF",

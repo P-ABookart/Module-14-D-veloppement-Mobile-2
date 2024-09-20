@@ -115,4 +115,10 @@ export const globalStyles = StyleSheet.create({
     color: "gray",
     fontSize: 30,
   },
+  topMyOrders: {
+    backgroundColor: "#222126",
+    paddingHorizontal: 10,
+    paddingVertical: 15,
+    marginLeft: 0,
+  },
 });
