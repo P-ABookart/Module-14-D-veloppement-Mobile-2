@@ -8,19 +8,25 @@ const MyModal = ({ visible, order, onClose }) => {
   return (
     <Modal animationType="fade" transparent={true} visible={visible} onRequestClose={onClose}>
       <View style={globalStyles.modalBackground}>
-        <View style={globalStyles.modalContainer}>
+        <View style={[globalStyles.modalContainer, styles.modalContent]}>
           <View style={globalStyles.top}>
             <View style={globalStyles.column}>
-              <Text style={styles.title}>{order.restaurant_name}</Text>
-              <Text style={styles.orderInfo}>Order Date: {order.timestamp.substring(0, 10)}</Text>
-              <Text style={styles.orderInfo}>Status: {order.status.toUpperCase()}</Text>
-              <Text style={styles.orderInfo}>Courrier: {order.courrier_name}</Text>
+              <Text style={styles.title}>DELIVERY DETAILS</Text>
+              <Text style={styles.status}>Status: {order.status.toUpperCase()}</Text>
             </View>
             <View style={styles.closeButtonContainer}>
               <TouchableOpacity onPress={onClose}>
                 <Text style={globalStyles.closeButtonText}>✖</Text>
               </TouchableOpacity>
             </View>
+          </View>
+
+          <View style={styles.orderContainer}>
+            <Text style={styles.orderInfo}>Delivery Address: {order.customer_address}</Text>
+            <Text style={styles.orderInfo}>Restaurant: {order.restaurant_name}</Text>
+            <Text style={styles.orderInfo}>Order Date: {order.timestamp.substring(0, 10)}</Text>
+
+            <Text style={styles.orderDetails}>Order Details:</Text>
           </View>
 
           {/* Show products */}
@@ -47,22 +53,39 @@ const MyModal = ({ visible, order, onClose }) => {
 };
 
 const styles = StyleSheet.create({
+  modalContent: {
+    alignItems: "flex-start",
+    width: "100%",
+  },
   title: {
     fontSize: 22,
-    fontWeight: "bold",
     color: "#DA583B",
     paddingBottom: 8,
-    paddingLeft: 10,
+    textAlign: "center",
+    fontFamily: "Oswald-Regular",
+  },
+  status: {
+    fontSize: 12,
+    color: "#FFFFFF",
+    textAlign: "center",
   },
   orderInfo: {
-    fontsize: 10,
-    color: "#FFFFFF",
-    paddingLeft: 10,
+    fontSize: 13,
+    marginVertical: 6,
+  },
+  orderDetails: {
+    fontSize: 18,
+    marginTop: 20,
+    marginBottom: 10,
+    fontFamily: "Oswald-Regular",
   },
   closeButtonContainer: {
     alignItems: "flex-end",
     justifyContent: "center",
     marginLeft: 10,
+  },
+  orderContainer: {
+    alignItems: "flex-start",
   },
 });
 

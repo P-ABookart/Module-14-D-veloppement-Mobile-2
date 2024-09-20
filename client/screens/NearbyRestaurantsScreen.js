@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList, Image } from "react-native";
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { globalStyles } from "../styles/globalStyles";
+import { useNavigation } from "@react-navigation/native";
+import { getPriceSymbol, getRatingSymbol } from "../utils/restaurantUtils";
 
 const EXPO_PUBLIC_NGROK_URL = process.env.EXPO_PUBLIC_NGROK_URL;
 
@@ -11,6 +13,8 @@ const NearbyRestaurants = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const navigation = useNavigation();
+
   const images = [
     require("../assets/restaurants/cuisineSoutheast.jpg"),
     require("../assets/restaurants/cuisineViet.jpg"),
@@ -19,12 +23,28 @@ const NearbyRestaurants = () => {
     require("../assets/restaurants/cuisinePasta.jpg"),
     require("../assets/restaurants/cuisinePizza.jpg"),
   ];
+
   const fetchRestaurants = async () => {
     try {
-      const url = `${EXPO_PUBLIC_NGROK_URL}/api/restaurants?rating=${selectedRating}&price_range=${selectedPrice}`;
+      if (!EXPO_PUBLIC_NGROK_URL) {
+        console.error("Ngrok url is not defined");
+        return;
+      }
+
+      let url = `${EXPO_PUBLIC_NGROK_URL}/api/restaurants?`;
+
+      if (selectedRating != 0) {
+        url += `rating=${selectedRating}&`;
+      }
+
+      if (selectedPrice != 0) {
+        url += `price_range=${selectedPrice}`;
+      }
+
       const response = await fetch(url);
-      const data = await response.json();
-      setRestaurants(data);
+      const result = await response.json();
+
+      setRestaurants(result.data);
       setLoading(false);
     } catch (error) {
       console.error("Error when getting restaurants:", error);
@@ -39,62 +59,53 @@ const NearbyRestaurants = () => {
   const renderRestaurant = ({ item }) => {
     const randomImage = images[Math.floor(Math.random() * images.length)];
 
-    let priceSymbol = "";
-    switch (item.price_range) {
-      case 1:
-        priceSymbol = "$";
-        break;
-      case 2:
-        priceSymbol = "$$";
-        break;
-      case 3:
-        priceSymbol = "$$$";
-        break;
-      default:
-        priceSymbol = "$";
-    }
+    const priceSymbol = getPriceSymbol(item.price_range);
+    const ratingSymbol = getRatingSymbol(item.rating);
 
     return (
-      <View style={styles.card}>
+      <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("RestaurantsMenu", { restaurant: item })}>
         <Image source={randomImage} style={styles.restaurantImage} />
         <View style={styles.restaurantInfo}>
-          <Text style={styles.restaurantName}>{item.name}</Text>
-          <Text style={styles.restaurantPrice}>{priceSymbol}</Text>
+          <Text style={styles.restaurantInfoText}>{item.name}</Text>
+          <Text style={styles.restaurantInfoText}>{priceSymbol}</Text>
+          <Text style={[styles.restaurantInfoText, styles.ratingStars]}>{ratingSymbol}</Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.screenContainer}>
       <Text style={globalStyles.title}>NEARBY RESTAURANTS</Text>
 
-      <View style={styles.row}>
-        <Text style={globalStyles.title}>Rating</Text>
-        <Text style={globalStyles.title}>Price</Text>
+      <View style={globalStyles.row}>
+        <View style={globalStyles.column}>
+          <Text style={globalStyles.title}>Rating</Text>
+        </View>
+        <View style={globalStyles.column}>
+          <Text style={globalStyles.title}>Price</Text>
+        </View>
       </View>
 
-      <View style={styles.row}>
-        <Picker
-          selectedValue={selectedRating}
-          style={[styles.picker, globalStyles.listItemText]}
-          itemStyle={{ fontSize: 8 }}
-          onValueChange={(itemValue) => setSelectedRating(itemValue)}
-        >
-          <Picker.Item label="-- Select --" value="0" />
-          <Picker.Item label="★" value="1" />
-          <Picker.Item label="★★" value="2" />
-          <Picker.Item label="★★★" value="3" />
-          <Picker.Item label="★★★★" value="4" />
-          <Picker.Item label="★★★★★" value="5" />
-        </Picker>
-
-        <Picker selectedValue={selectedPrice} style={[styles.picker, globalStyles.listItemText]} onValueChange={(itemValue) => setSelectedPrice(itemValue)}>
-          <Picker.Item label="-- Select --" value="0" />
-          <Picker.Item label="$" value="1" />
-          <Picker.Item label="$$" value="2" />
-          <Picker.Item label="$$$" value="3" />
-        </Picker>
+      <View style={globalStyles.row}>
+        <View style={globalStyles.column}>
+          <Picker selectedValue={selectedRating} style={[styles.picker, globalStyles.listItemText]} onValueChange={(itemValue) => setSelectedRating(itemValue)}>
+            <Picker.Item label="-Select-" value="0" />
+            <Picker.Item label="★" value="1" />
+            <Picker.Item label="★★" value="2" />
+            <Picker.Item label="★★★" value="3" />
+            <Picker.Item label="★★★★" value="4" />
+            <Picker.Item label="★★★★★" value="5" />
+          </Picker>
+        </View>
+        <View style={globalStyles.column}>
+          <Picker selectedValue={selectedPrice} style={[styles.picker, globalStyles.listItemText]} onValueChange={(itemValue) => setSelectedPrice(itemValue)}>
+            <Picker.Item label="-Select-" value="0" />
+            <Picker.Item label="$" value="1" />
+            <Picker.Item label="$$" value="2" />
+            <Picker.Item label="$$$" value="3" />
+          </Picker>
+        </View>
       </View>
 
       <Text style={globalStyles.title}>RESTAURANTS</Text>
@@ -102,57 +113,62 @@ const NearbyRestaurants = () => {
       {loading ? (
         <Text>Loading...</Text>
       ) : (
-        <FlatList data={restaurants} renderItem={renderRestaurant} keyExtractor={(item) => item.id.toString()} style={styles.restaurantList} />
+        <FlatList
+          data={restaurants}
+          renderItem={renderRestaurant}
+          keyExtractor={(item) => item.id.toString()}
+          style={styles.restaurantList}
+          numColumns={2}
+          columnWrapperStyle={styles.columnWrapper}
+        />
       )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    margin: 20,
-  },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-  },
   picker: {
     height: 50,
-    width: "46%",
+    width: "95%",
     backgroundColor: "rgb(218, 88, 59)",
     color: "#fff",
     borderRadius: 5,
   },
   card: {
-    flexDirection: "row",
+    flex: 1,
+    flexDirection: "column",
+    margin: 5,
     backgroundColor: "#fff",
     borderRadius: 10,
-    marginBottom: 15,
-    padding: 10,
+    overflow: "hidden",
     elevation: 3,
   },
   restaurantImage: {
-    width: 100,
+    width: "100%",
     height: 100,
     borderRadius: 8,
   },
   restaurantInfo: {
     flex: 1,
     marginLeft: 10,
+    paddingHorizontal: 5,
+    paddingTop: 10,
+    paddingBottom: 18,
     justifyContent: "center",
   },
-  restaurantName: {
+  restaurantInfoText: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontFamily: "Oswald-Regular",
+    color: "#222126",
   },
-  restaurantPrice: {
-    fontSize: 16,
-    color: "gray",
+  ratingStars: {
+    fontSize: 13,
   },
   restaurantList: {
     marginTop: 10,
+  },
+  columnWrapper: {
+    justifyContent: "space-between",
   },
 });
 
