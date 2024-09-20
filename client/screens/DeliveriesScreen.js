@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from "react-native";
 import { globalStyles } from "../styles/globalStyles";
 import { AuthContext } from "../context/AuthContext";
-import OrderViewModal from "../modals/OrderViewModal";
+import DeliveriesViewModal from "../modals/DeliveriesViewModal";
 
 const EXPO_PUBLIC_NGROK_URL = process.env.EXPO_PUBLIC_NGROK_URL;
 
@@ -157,7 +157,7 @@ const DeliveriesScreen = () => {
         />
       )}
 
-      <OrderViewModal visible={isModalVisible} order={selectedOrder} onClose={closeModal} />
+      <DeliveriesViewModal visible={isModalVisible} order={selectedOrder} onClose={closeModal} />
     </View>
   );
 };
