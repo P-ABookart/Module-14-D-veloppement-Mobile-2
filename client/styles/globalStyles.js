@@ -78,6 +78,17 @@ export const globalStyles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "rgba(0, 0, 0,0.5)",
   },
+  screenContainer: {
+    flex: 1,
+    margin: 20,
+  },
+  entryContainer: {
+    flex: 1,
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
   modalContainer: {
     width: "96%",
     padding: 20,
@@ -120,5 +131,23 @@ export const globalStyles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 15,
     marginLeft: 0,
+  },
+  subText: {
+    fontSize: 12,
+    color: "#808080",
+    marginBottom: 5,
+    marginTop: 10,
+  },
+  formContainer: {
+    width: "100%",
+  },
+  input: {
+    height: 50,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 5,
+    marginBottom: 5,
+    paddingHorizontal: 10,
+    fontSize: 16,
   },
 });

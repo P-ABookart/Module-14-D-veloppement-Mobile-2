@@ -75,7 +75,7 @@ const NearbyRestaurants = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.screenContainer}>
       <Text style={globalStyles.title}>NEARBY RESTAURANTS</Text>
 
       <View style={globalStyles.row}>
@@ -127,10 +127,6 @@ const NearbyRestaurants = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    margin: 20,
-  },
   picker: {
     height: 50,
     width: "95%",

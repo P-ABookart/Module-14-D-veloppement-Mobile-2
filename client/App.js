@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { AuthProvider, AuthContext } from "./context/AuthContext";
+import { RoleProvider } from "./context/RoleContext.js";
 import * as Font from "expo-font";
 
 // Screens
@@ -39,7 +40,7 @@ function CustomHeader({ navigation }) {
         width: "100%",
       }}
     >
-      <Image source={require("./assets/AppLogoV1.png")} style={{ width: "35%", height: "5%" }} resizeMode="contain" />
+      <Image source={require("./assets/AppLogoV1.png")} style={{ width: "45%", height: "100%" }} resizeMode="contain" />
 
       <TouchableOpacity
         style={globalStyles.button}
@@ -219,7 +220,9 @@ export default function App() {
 
   return (
     <AuthProvider>
-      <NavigationContainer>{fontLoaded ? <AppStack /> : null}</NavigationContainer>
+      <RoleProvider>
+        <NavigationContainer>{fontLoaded ? <AppStack /> : null}</NavigationContainer>
+      </RoleProvider>
     </AuthProvider>
   );
 }

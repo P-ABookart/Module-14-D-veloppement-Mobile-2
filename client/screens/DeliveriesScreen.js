@@ -132,7 +132,7 @@ const DeliveriesScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.screenContainer}>
       <Text style={globalStyles.title}>MY DELIVERIES</Text>
       <View style={globalStyles.topMyOrders}>
         <View style={globalStyles.row}>
@@ -163,10 +163,6 @@ const DeliveriesScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 15,
-  },
   orderId: {
     width: "15%",
     textAlign: "center",

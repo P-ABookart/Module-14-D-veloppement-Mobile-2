@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView,
 import { useNavigation } from "@react-navigation/native";
 import { globalStyles } from "../styles/globalStyles";
 import { AuthContext } from "../context/AuthContext.js";
+import { RoleContext } from "../context/RoleContext.js";
 
 const EXPO_PUBLIC_NGROK_URL = process.env.EXPO_PUBLIC_NGROK_URL;
 
@@ -13,7 +14,9 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigation = useNavigation();
+
   const { login } = useContext(AuthContext);
+  const { chooseAccount } = useContext(RoleContext);
 
   const handleLogin = async (email, password) => {
     try {
@@ -45,8 +48,10 @@ const LoginScreen = () => {
       if (data.customer_id != 0 && data.courier_id != 0) {
         navigation.navigate("SelectAccount");
       } else if (data.customer_id != 0) {
+        chooseAccount("Customer");
         navigation.navigate("CustomerMain");
       } else if (data.courier_id != 0) {
+        chooseAccount("Courier");
         navigation.navigate("CourierMain");
       } else {
         setErrorMessage("No valid role found for the user. Please contact support.");
@@ -60,7 +65,7 @@ const LoginScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.container}>
+      <View style={globalStyles.entryContainer}>
         {/* Logo */}
         <View style={styles.logoContainer}>
           <Image source={require("../assets/AppLogoV2.png")} style={styles.logo} />
@@ -74,23 +79,30 @@ const LoginScreen = () => {
           </View>
 
           {/* Connexion form */}
-          <Text style={styles.subText}>Email</Text>
-          <View style={styles.formContainer}>
+          <Text style={globalStyles.subText}>Email</Text>
+          <View style={globalStyles.formContainer}>
             <TextInput
-              style={styles.input}
+              style={globalStyles.input}
               placeholder="Enter your primary email here"
               value={email}
               onChangeText={setEmail}
               keyboardType="email-address"
               autoCapitalize="none"
             />
-            <Text style={styles.subText}>Password</Text>
-            <TextInput style={styles.input} placeholder="************" value={password} onChangeText={setPassword} autoCapitalize="none" secureTextEntry />
+            <Text style={globalStyles.subText}>Password</Text>
+            <TextInput
+              style={globalStyles.input}
+              placeholder="************"
+              value={password}
+              onChangeText={setPassword}
+              autoCapitalize="none"
+              secureTextEntry
+            />
 
             {/* Error message */}
             {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
 
-            <TouchableOpacity style={globalStyles.button} onPress={() => handleLogin(email, password)}>
+            <TouchableOpacity style={[globalStyles.button, { marginTop: 20 }]} onPress={() => handleLogin(email, password)}>
               <Text style={globalStyles.buttonText}>LOG IN</Text>
             </TouchableOpacity>
           </View>
@@ -101,13 +113,6 @@ const LoginScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-  },
   logoContainer: {
     justifyContent: "center",
     alignItems: "center",
@@ -124,11 +129,6 @@ const styles = StyleSheet.create({
   loginText: {
     fontSize: 16,
   },
-  subText: {
-    fontSize: 12,
-    color: "#808080",
-    marginBottom: 5,
-  },
   formWrapper: {
     width: "100%",
     padding: 20,
@@ -136,18 +136,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     backgroundColor: "#f9f9f9",
-  },
-  formContainer: {
-    width: "100%",
-  },
-  input: {
-    height: 50,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 5,
-    marginBottom: 15,
-    paddingHorizontal: 10,
-    fontSize: 16,
   },
   errorText: {
     color: "red",

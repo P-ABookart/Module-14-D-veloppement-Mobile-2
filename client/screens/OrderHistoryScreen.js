@@ -60,7 +60,7 @@ const OrderHistoryScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.screenContainer}>
       <Text style={globalStyles.title}>MY ORDERS</Text>
       <View style={[globalStyles.row, globalStyles.topMyOrders]}>
         <Text style={styles.topOrder}>ORDER</Text>
@@ -87,10 +87,6 @@ const OrderHistoryScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 15,
-  },
   order: {
     width: "45%",
     textAlign: "left",

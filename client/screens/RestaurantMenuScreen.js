@@ -87,7 +87,7 @@ const RestaurantMenuScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.screenContainer}>
       <Text style={globalStyles.title}>RESTAURANT MENU</Text>
       <View style={globalStyles.row}>
         <View style={globalStyles.column}>
@@ -131,10 +131,6 @@ const RestaurantMenuScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    margin: 20,
-  },
   restaurantName: {
     fontWeight: "bold",
     fontSize: 18,

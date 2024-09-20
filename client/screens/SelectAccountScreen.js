@@ -1,25 +1,38 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { globalStyles } from "../styles/globalStyles";
+import { RoleContext } from "../context/RoleContext";
 
 const { width, height } = Dimensions.get("window");
 
 const SelectAccountScreen = () => {
   const navigation = useNavigation();
 
+  const { chooseAccount } = useContext(RoleContext);
+
+  const navigateToCustomer = () => {
+    chooseAccount("Customer");
+    navigation.navigate("CustomerMain");
+  };
+
+  const navigateToCourier = () => {
+    chooseAccount("Courier");
+    navigation.navigate("CourierMain");
+  };
+
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.entryContainer}>
       <View style={styles.logoContainer}>
         <Image source={require("../assets/AppLogoV2.png")} style={styles.logo} />
       </View>
       <Text style={styles.title}>Select Account Type</Text>
       <View style={globalStyles.row}>
-        <TouchableOpacity style={styles.accountCard} onPress={() => navigation.navigate("CustomerMain")}>
+        <TouchableOpacity style={styles.accountCard} onPress={navigateToCustomer}>
           <Image source={require("../assets/customerTypeIcon.png")} style={styles.image}></Image>
           <Text style={styles.accountText}>Customer</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.accountCard} onPress={() => navigation.navigate("CourierMain")}>
+        <TouchableOpacity style={styles.accountCard} onPress={navigateToCourier}>
           <Image source={require("../assets/courierTypeIcon.png")} style={styles.image}></Image>
           <Text style={styles.accountText}>Courier</Text>
         </TouchableOpacity>
@@ -29,13 +42,6 @@ const SelectAccountScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-  },
   title: {
     fontSize: 24,
     fontFamily: "Oswald-Regular",
