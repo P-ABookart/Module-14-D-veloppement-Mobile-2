@@ -1,15 +1,15 @@
 import React, { useState, useContext } from "react";
-import { View, Text, Modal, StyleSheet, Dimensions, TouchableOpacity, ActivityIndicator } from "react-native";
+import { View, Text, Modal, StyleSheet, TouchableOpacity, ActivityIndicator, Switch } from "react-native";
 import { globalStyles } from "../styles/globalStyles";
 import { AuthContext } from "../context/AuthContext";
-
-const { width } = Dimensions.get("window");
 
 const EXPO_PUBLIC_NGROK_URL = process.env.EXPO_PUBLIC_NGROK_URL;
 
 const OrderConfirmationModal = ({ visible, onClose, orderItems, restaurantId, customerId }) => {
   const { authData } = useContext(AuthContext);
   const [orderStatus, setOrderStatus] = useState("idle"); // idle, processing, success, error
+  const [sendSMS, setSendSMS] = useState(false);
+  const [sendEmail, setSendEmail] = useState(false);
 
   const total = orderItems.reduce((acc, item) => acc + item.cost * item.quantity, 0).toFixed(2);
 
@@ -32,13 +32,16 @@ const OrderConfirmationModal = ({ visible, onClose, orderItems, restaurantId, cu
           restaurant_id: restaurantId,
           customer_id: authData.customer_id,
           products: orderItems.map((item) => ({ id: item.id, quantity: item.quantity })),
+          sendEmail: sendEmail,
+          sendSMS: sendSMS,
         }),
       });
 
       if (response.ok) {
         setOrderStatus("success");
       } else {
-        throw new Error("Order failed");
+        const errorResponse = await response.json();
+        throw new Error(`Order failed: ${errorResponse.message || "Unknown error"}`);
       }
     } catch (error) {
       console.error("Error when placing order:", error);
@@ -78,6 +81,17 @@ const OrderConfirmationModal = ({ visible, onClose, orderItems, restaurantId, cu
             <Text style={globalStyles.total}>$ {total}</Text>
           </View>
 
+          <Text style={styles.confirmationText}>Would you like to receive your order confirmation by email and/or text?</Text>
+          <View style={styles.switchContainer}>
+            <View style={styles.switchRow}>
+              <Switch value={sendEmail} onValueChange={(newValue) => setSendEmail(newValue)} />
+              <Text style={styles.sendByText}>By Email</Text>
+            </View>
+            <View style={styles.switchRow}>
+              <Switch value={sendSMS} onValueChange={(newValue) => setSendSMS(newValue)} />
+              <Text style={styles.sendByText}>By Phone</Text>
+            </View>
+          </View>
           {orderStatus === "processing" && (
             <View style={[globalStyles.button, styles.confirmOrder, styles.processing]}>
               <Text style={globalStyles.buttonText}>PROCESSING ORDER...</Text>
@@ -168,6 +182,28 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+  },
+  confirmationText: {
+    textAlign: "center",
+    fontSize: 14,
+    marginBottom: 8,
+  },
+  switchContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 15,
+    marginBottom: 8,
+    width: "100%",
+  },
+  switchRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
+  },
+  sendByText: {
+    fontSize: 18,
+    marginLeft: 8,
   },
 });
 
