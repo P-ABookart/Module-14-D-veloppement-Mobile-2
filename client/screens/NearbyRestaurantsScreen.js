@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, ActivityIndicator } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { globalStyles } from "../styles/globalStyles";
 import { useNavigation } from "@react-navigation/native";
@@ -58,7 +58,6 @@ const NearbyRestaurants = () => {
 
   const renderRestaurant = ({ item }) => {
     const randomImage = images[Math.floor(Math.random() * images.length)];
-
     const priceSymbol = getPriceSymbol(item.price_range);
     const ratingSymbol = getRatingSymbol(item.rating);
 
@@ -72,6 +71,13 @@ const NearbyRestaurants = () => {
         </View>
       </TouchableOpacity>
     );
+  };
+
+  const addEmptyCardIfOdd = (data) => {
+    if (data.length % 2 !== 0) {
+      return [...data, { id: "empty" }];
+    }
+    return data;
   };
 
   return (
@@ -111,11 +117,11 @@ const NearbyRestaurants = () => {
       <Text style={globalStyles.title}>RESTAURANTS</Text>
 
       {loading ? (
-        <Text>Loading...</Text>
+        <ActivityIndicator style={globalStyles.loading} size="big" color="#000000" />
       ) : (
         <FlatList
-          data={restaurants}
-          renderItem={renderRestaurant}
+          data={addEmptyCardIfOdd(restaurants)}
+          renderItem={({ item }) => (item.id === "empty" ? <View style={styles.emptyCard} /> : renderRestaurant({ item }))}
           keyExtractor={(item) => item.id.toString()}
           style={styles.restaurantList}
           numColumns={2}
@@ -143,6 +149,12 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     elevation: 3,
   },
+  emptyCard: {
+    flex: 1,
+    flexDirection: "column",
+    margin: 5,
+    backgroundColor: "transparent",
+  },
   restaurantImage: {
     width: "100%",
     height: 100,
@@ -168,7 +180,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   columnWrapper: {
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
   },
 });
 

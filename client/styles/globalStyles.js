@@ -150,4 +150,9 @@ export const globalStyles = StyleSheet.create({
     paddingHorizontal: 10,
     fontSize: 16,
   },
+  loading: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });

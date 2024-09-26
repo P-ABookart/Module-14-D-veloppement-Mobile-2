@@ -129,7 +129,7 @@ function DeliveriesStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Deliveries"
+        name="DeliveriesScreen"
         component={DeliveriesScreen}
         options={({ navigation }) => ({
           headerTitle: () => <CustomHeader navigation={navigation} />,

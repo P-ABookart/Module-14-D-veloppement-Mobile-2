@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView, Dimensions } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView, Dimensions, ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { globalStyles } from "../styles/globalStyles";
 import { AuthContext } from "../context/AuthContext.js";
@@ -13,6 +13,7 @@ const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
 
   const { login } = useContext(AuthContext);
@@ -20,6 +21,7 @@ const LoginScreen = () => {
 
   const handleLogin = async (email, password) => {
     try {
+      setLoading(true);
       if (!EXPO_PUBLIC_NGROK_URL) {
         console.error("Ngrok url is not defined");
         return;
@@ -55,11 +57,13 @@ const LoginScreen = () => {
         navigation.navigate("CourierMain");
       } else {
         setErrorMessage("No valid role found for the user. Please contact support.");
+        setLoading(false);
         return;
       }
     } catch (error) {
       console.error("Error during login:", error);
       setErrorMessage("An error occurred. Please try again later.");
+      setLoading(false);
     }
   };
 
@@ -103,7 +107,7 @@ const LoginScreen = () => {
             {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
 
             <TouchableOpacity style={[globalStyles.button, { marginTop: 20 }]} onPress={() => handleLogin(email, password)}>
-              <Text style={globalStyles.buttonText}>LOG IN</Text>
+              {loading ? <ActivityIndicator size="small" color="#FFFFFF" /> : <Text style={globalStyles.buttonText}>LOG IN</Text>}
             </TouchableOpacity>
           </View>
         </View>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image, ActivityIndicator } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { globalStyles } from "../styles/globalStyles";
 import { getPriceSymbol, getRatingSymbol } from "../utils/restaurantUtils";
@@ -103,7 +103,7 @@ const RestaurantMenuScreen = () => {
       </View>
 
       {loading ? (
-        <Text>Loading...</Text>
+        <ActivityIndicator style={globalStyles.loading} size="big" color="#000000" />
       ) : (
         <FlatList
           data={products}

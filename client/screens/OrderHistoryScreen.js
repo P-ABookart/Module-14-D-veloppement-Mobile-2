@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from "react-native";
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, ActivityIndicator } from "react-native";
 import { globalStyles } from "../styles/globalStyles";
 import { AuthContext } from "../context/AuthContext";
 import OrderViewModal from "../modals/OrderViewModal";
@@ -68,7 +68,7 @@ const OrderHistoryScreen = () => {
         <Text style={styles.topView}>VIEW</Text>
       </View>
       {loading ? (
-        <Text>Loading...</Text>
+        <ActivityIndicator style={globalStyles.loading} size="big" color="#000000" />
       ) : (
         <FlatList
           data={orders}
