@@ -1,26 +1,26 @@
-# JAVA & Ngrok Project with Expo Go
+# Projet JAVA & Ngrok avec Expo Go
 
-This project is an application using **Java** for the backend and **Ngrok** to enable online access to the API. It requires a phone emulator or the **Expo Go** app for the front-end on a physical device.
+Ce projet est une application utilisant **Java** pour le backend et **Ngrok** pour permettre un accès à l'API en ligne. Il nécessite un émulateur de téléphone ou l'application **Expo Go** pour le front-end sur un appareil physique.
 
-## Prerequisites
+## Prérequis
 
-1. **Java** must be installed.
-2. **Ngrok** must be installed and configured.
-3. A phone emulator or the **Expo Go** app on a physical phone.
-4. **Node.js** and **npm** must be installed to manage the front-end libraries.
+1. **Java** doit être installé.
+2. **Ngrok** doit être installé et configuré.
+3. Un émulateur de téléphone ou l'application **Expo Go** sur un téléphone physique.
+4. **Node.js** et **npm** doivent être installés pour gérer les bibliothèques front-end.
 
-## Installation Instructions
+## Instructions d'installation
 
 ### Front-end
 
-1. Open a terminal in the client directory.
-2. Install the dependencies by running the following command:
+1. Ouvrez un terminal dans le répertoire client.
+2. Installez les dépendances en exécutant la commande suivante :
 
   ```bash
   npm install
   ```
 
-3. To start the front-end, run:
+3. Pour démarrer le front-end, exécutez :
 
   ```bash
   npm start
@@ -28,28 +28,28 @@ This project is an application using **Java** for the backend and **Ngrok** to e
 
 ### Back-end
 
-1. Open a terminal in the serverJAVA directory.
-2. To start the back-end, run:
+1. Ouvrez un terminal dans le répertoire serverJAVA.
+2. Pour démarrer le back-end, exécutez: 
 
   ```bash
   mvn spring-boot:run
   ```
 
-## Required Files
+## Fichiers requis
 
 ### .env
 
-A .env file must be created in the client folder with the following path: client/.env.
+Un fichier .env doit être créé dans le dossier client avec le chemin suivant : client/.env.
 
-Example content:
+Exemple de contenu :
 
   EXPO_PUBLIC_NGROK_URL=""
 
 ### application.properties
 
-An application.properties file must be created in the folder with the following path: /serverJAVA/src/main/resources/application.properties.
+Un fichier application.properties doit être créé dans le dossier avec le chemin suivant : /serverJAVA/src/main/resources/application.properties.
 
-Example content:
+Exemple de contenu :
 
   ```bash
   # Database Configuration
@@ -90,60 +90,60 @@ Example content:
   notify.template.id=""
   ```
 
-## Useful Commands
+## Commandes utiles
 
-### Installing dependencies
+### Installation des dépendances
 
-To install all the project dependencies, run this command in the client folder:
+Pour installer toutes les dépendances du projet, exécutez cette commande dans le dossier client
 
   ```bash
   npm install
   ```
 
-### Starting the project
+### Démarrage du projet
 
-To start the front-end (in the client folder):
+Pour démarrer le front-end (dans le dossier client) :
 
   ```bash
   npm start
   ```
 
-To start the back-end (in the serverJAVA folder):
+Pour démarrer le back-end (dans le dossier serverJAVA) :
 
   ```bash
   mvn spring-boot:run
   ```
 
-## Additional Configurations
+## Configurations supplémentaires
 
-### Ngrok Configuration
+### Configuration Ngrok
 
-Ngrok must be configured to allow online access to the backend API. Make sure the Ngrok URL is correct in the client’s .env file.
+Ngrok doit être configuré pour permettre un accès à l'API du backend en ligne. Assurez-vous que l'URL Ngrok est correcte dans le fichier .env du client.
 
-### MySQL Configuration
+### Configuration MySQL
 
-The backend uses MySQL for the database. The connection information (URL, username, password) must be correctly set in the application.properties file.
+Le backend utilise MySQL pour la base de données. Les informations de connexion (URL, nom d'utilisateur, mot de passe) doivent être correctement définies dans le fichier application.properties.
 
-### Twilio and Notify.EU Configuration
+### Configuration Twilio et Notify.EU
 
-If you're using Twilio or Notify.EU services to send notifications, make sure to add the correct credentials in application.properties.
+Si vous utilisez les services Twilio ou Notify.EU pour envoyer des notifications, assurez-vous d'ajouter les identifiants corrects dans application.properties.
 
-## Features
+## Fonctionnalités
 
-- MySQL Database: Connection and management via Spring Boot.
-- JWT: Secure session management using JWT tokens.
-- Twilio: SMS notifications.
-- Notify.EU: Email notifications integration.
+- Base de données MySQL : Connexion et gestion via Spring Boot.
+- JWT : Gestion des sessions sécurisées avec des tokens JWT.
+- Twilio : Envoi de SMS pour des notifications.
+- Notify.EU : Intégration pour l'envoi de notifications par email.
 
-## Technologies Used
+## Technologies Utilisées
 
-- Java with Spring Boot for the backend
-- Expo Go and React Native for the frontend
-- MySQL for the database
-- Ngrok to expose the local server
-- Twilio for SMS notifications
-- Notify.EU for email notifications
+- Java avec Spring Boot pour le backend
+- Expo Go et React Native pour le frontend
+- MySQL pour la base de données
+- Ngrok pour exposer localement le serveur
+- Twilio pour les notifications SMS
+- Notify.EU pour les notifications email
 
-## Authors
+## Auteurs
 
-Pier-Alexandre - Developer
+Pier-Alexandre - Développeur
