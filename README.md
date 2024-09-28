@@ -1,3 +1,3 @@
-![English](https://img.shields.io/badge/lang-English-blue) [English version](README_en.md)
+# Rocket Food Delivery
 
-![Français](https://img.shields.io/badge/lang-Français-blue) [Version française](README_fr.md)
+[Read in English](README_en.md) | [Lire en français](README_fr.md)

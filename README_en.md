@@ -1,4 +1,4 @@
-# JAVA & Ngrok Project with Expo Go
+# Rocket Food Delivery
 
 This project is an application using **Java** for the backend and **Ngrok** to enable online access to the API. It requires a phone emulator or the **Expo Go** app for the front-end on a physical device.
 
@@ -42,8 +42,9 @@ This project is an application using **Java** for the backend and **Ngrok** to e
 A .env file must be created in the client folder with the following path: client/.env.
 
 Example content:
-
+  ```bash
   EXPO_PUBLIC_NGROK_URL=""
+  ```
 
 ### application.properties
 
